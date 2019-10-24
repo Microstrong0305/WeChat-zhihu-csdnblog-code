@@ -1,15 +1,9 @@
-"""
-Created on ：2019/03/28
-@author: Freeman, feverfc1994
-"""
-
 import abc
-import math
 import logging
 import pandas as pd
-from GBDT.decision_tree import Tree
-from GBDT.loss_function import SquaresError, BinomialDeviance, MultinomialDeviance
-from GBDT.tree_plot import plot_tree, plot_all_trees, plot_multi
+from decision_tree import Tree
+from loss_function import SquaresError
+from tree_plot import plot_tree, plot_all_trees, plot_multi
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()

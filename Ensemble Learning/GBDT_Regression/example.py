@@ -1,6 +1,18 @@
-import pandas as pd
+import os
 import shutil
-from GBDT.gbdt import GradientBoostingRegressor
+import logging
+import argparse
+import pandas as pd
+from gbdt import GradientBoostingRegressor
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
+logger.removeHandler(logger.handlers[0])
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+logger.addHandler(ch)
 
 
 def run(args):
@@ -26,7 +38,7 @@ def run(args):
     # 记录日志
     logger.removeHandler(logger.handlers[-1])
     logger.addHandler(logging.FileHandler('results/result.log'.format(iter), mode='w', encoding='utf-8'))
-    logger.info(data)
+    logger.info(train_data)
     # 模型预测
     model.predict(test_data)
     # 记录日志
