@@ -3,9 +3,7 @@ import shutil
 import logging
 import argparse
 import pandas as pd
-from gbdt import GradientBoostingRegressor
 from gbdt import GradientBoostingBinaryClassifier
-from gbdt import GradientBoostingMultiClassifier
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -19,12 +17,6 @@ logger.addHandler(ch)
 
 def get_data(model):
     dic = {}
-    dic['regression'] = [pd.DataFrame(data=[[1, 5, 20, 1.1],
-                                            [2, 7, 30, 1.3],
-                                            [3, 21, 70, 1.7],
-                                            [4, 30, 60, 1.8],
-                                            ], columns=['id', 'age', 'weight', 'label']),
-                         pd.DataFrame(data=[[5, 25, 65]], columns=['id', 'age', 'weight'])]
 
     dic['binary_cf'] = [pd.DataFrame(data=[[1, 5, 20, 0],
                                            [2, 7, 30, 0],
@@ -32,15 +24,6 @@ def get_data(model):
                                            [4, 30, 60, 1],
                                            ], columns=['id', 'age', 'weight', 'label']),
                         pd.DataFrame(data=[[5, 25, 65]], columns=['id', 'age', 'weight'])]
-
-    dic['multi_cf'] = [pd.DataFrame(data=[[1, 5, 20, 0],
-                                          [2, 7, 30, 0],
-                                          [3, 21, 70, 1],
-                                          [4, 30, 60, 1],
-                                          [5, 30, 60, 2],
-                                          [6, 30, 70, 2],
-                                          ], columns=['id', 'age', 'weight', 'label']),
-                       pd.DataFrame(data=[[5, 25, 65]], columns=['id', 'age', 'weight'])]
 
     return dic[model]
 
@@ -57,15 +40,9 @@ def run(args):
         shutil.rmtree('results')
         os.makedirs('results')
     # 初始化模型
-    if args.model == 'regression':
-        model = GradientBoostingRegressor(learning_rate=args.lr, n_trees=args.trees, max_depth=args.depth,
-                                          min_samples_split=args.count, is_log=args.log, is_plot=args.plot)
     if args.model == 'binary_cf':
         model = GradientBoostingBinaryClassifier(learning_rate=args.lr, n_trees=args.trees, max_depth=args.depth,
                                                  is_log=args.log, is_plot=args.plot)
-    if args.model == 'multi_cf':
-        model = GradientBoostingMultiClassifier(learning_rate=args.lr, n_trees=args.trees, max_depth=args.depth,
-                                                is_log=args.log, is_plot=args.plot)
     # 训练模型
     model.fit(data)
     # 记录日志
@@ -76,12 +53,8 @@ def run(args):
     model.predict(test_data)
     # 记录日志
     logger.setLevel(logging.INFO)
-    if args.model == 'regression':
-        logger.info((test_data['predict_value']))
     if args.model == 'binary_cf':
         logger.info((test_data['predict_proba']))
-        logger.info((test_data['predict_label']))
-    if args.model == 'multi_cf':
         logger.info((test_data['predict_label']))
     pass
 
@@ -89,7 +62,7 @@ def run(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='GBDT-Simple-Tutorial')
     parser.add_argument('--model', default='binary_cf', help='the model you want to use',
-                        choices=['regression', 'binary_cf', 'multi_cf'])
+                        choices=['binary_cf'])
     parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
     parser.add_argument('--trees', default=5, type=int, help='the number of decision trees')
     parser.add_argument('--depth', default=3, type=int, help='the max depth of decision trees')
