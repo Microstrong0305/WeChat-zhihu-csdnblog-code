@@ -2,29 +2,6 @@ import math
 import abc
 
 
-class LossFunction(metaclass=abc.ABCMeta):
-
-    @abc.abstractmethod
-    def initialize_f_0(self, data):
-        """初始化 F_0 """
-
-    @abc.abstractmethod
-    def calculate_residual(self, data, iter):
-        """计算负梯度"""
-
-    @abc.abstractmethod
-    def update_f_m(self, data, trees, iter, learning_rate, logger):
-        """计算 F_m """
-
-    @abc.abstractmethod
-    def update_leaf_values(self, targets, y):
-        """更新叶子节点的预测值"""
-
-    @abc.abstractmethod
-    def get_train_loss(self, y, f, iter, logger):
-        """计算训练损失"""
-
-
 class MultinomialDeviance:
 
     def init_classes(self, classes):
