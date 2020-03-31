@@ -11,3 +11,4 @@
 1. [深入理解XGBoost](https://mp.weixin.qq.com/s/HDEKnIufbW8xQcOgHaXlZw) | [code](./Ensemble%20Learning/XGBoost)
 1. [深入理解LightGBM](https://mp.weixin.qq.com/s/zejkifZnYXAfgTRrkMaEww) | [code](./Ensemble%20Learning/LightGBM)  
 1. [深入理解CatBoost](https://mp.weixin.qq.com/s/xloTLr5NJBgBspMQtxPoFA) | [code](./Ensemble%20Learning/CatBoost)
+1. [深入浅出Word2Vec原理解析](https://mp.weixin.qq.com/s/zDneR1BU6xvt8cndEF4_Xw) | [code](./NLP/Word2Vec/Skip-gram_tensorflow.ipynb)
